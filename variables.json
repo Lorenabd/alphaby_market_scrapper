@@ -1,0 +1,32 @@
+{
+    "text": {
+      "all": []
+    },
+    "user_info": {
+      "user": [],
+      "user_level": [],
+      "user_trust_level":[],
+      "join_year_user": [],
+      "orders": {
+        "completed": []
+      }
+    },
+    "market_info": {
+      "specialized": [],
+      "product_type": [],
+      "price": [],
+      "payment_method":[]
+    },
+    "sales_info": {
+      "transactions":[]
+    },
+    "quality_info": {
+      "stealth_level": [],
+      "product_quality_level": [],
+      "price_value_rating": []
+    },
+    "place_info": {
+      "place": []
+    }
+  }
+  

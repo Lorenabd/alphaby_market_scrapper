@@ -1,0 +1,5 @@
+selenium==4.28.1
+pandas==2.1.4
+PyQt5==5.15.10
+lxml==5.1.0
+regex==2024.11.6
