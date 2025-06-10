@@ -193,15 +193,7 @@ class ScrapingMarket():
             except NoSuchElementException:
                 print("Processing last page or the only one available")
                 last_page=True
-            try:
-                # if(first_time):
-                #     first_time=False
-                #     try:
-                #         self.main_driver.find_element(By.XPATH,f"//nav[2]//a[contains(@class, 'page-link') and contains(text(),'{next_page_to_process}')]")
-                #     except NoSuchElementException:
-                #         print("Only one page to process")
-                #         break
-                
+            try:               
                 if(last_page):
                     break
                 
