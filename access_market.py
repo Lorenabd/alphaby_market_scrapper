@@ -31,12 +31,21 @@ class AccessMarket:
 
     def set_options(self):
         options = Options()
-        options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
+        # appdir = os.environ.get("APPDIR", "")
+        # if appdir:
+        #     # Firefox embebido en AppImage
+        #     firefox_path = os.path.join(appdir, "lib/firefox/firefox")
+        #     options.binary_location = firefox_path
+        # else:
+        #     # Fallback: usar TOR o firefox del sistema
+        #     options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
+        # options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
         options.set_preference("network.proxy.socks_port", 9051)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
+        options.headless = False
         return options
 
     def execute_browser(self, options):
