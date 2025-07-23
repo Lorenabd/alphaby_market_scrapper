@@ -20,6 +20,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from lxml import html
+from selenium.webdriver.firefox.service import Service
 from market_scraping import ScrapingMarket
 import os
 
@@ -27,7 +28,9 @@ import os
 class AccessMarket:
     def __init__(self):
         options = self.set_options()
-        self.execute_browser(options)
+        gecko_path = os.path.join(os.getenv("APPDIR", ""), "bin/geckodriver")
+        service = Service(executable_path=gecko_path)
+        self.execute_browser(options, service)
 
     def set_options(self):
         options = Options()
@@ -39,17 +42,16 @@ class AccessMarket:
         # else:
         #     # Fallback: usar TOR o firefox del sistema
         #     options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
-        # options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
+        options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
         options.set_preference("network.proxy.socks_port", 9050)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
-        options.headless = False
         return options
 
-    def execute_browser(self, options):
-        main_driver = webdriver.Firefox(options=options)
+    def execute_browser(self, options, service):
+        main_driver = webdriver.Firefox(options=options, service=service)
         connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
         connect_button.click()
         time.sleep(3)
