@@ -28,9 +28,12 @@ import os
 class AccessMarket:
     def __init__(self):
         options = self.set_options()
+        gecko_path = (
+            "/home/osboxes/.cache/selenium/geckodriver/linux64/0.36.0/geckodriver"
+        )
         # gecko_path = os.path.join(os.getenv("APPDIR", ""), "bin/geckodriver")
-        # service = Service(executable_path=gecko_path)
-        self.execute_browser(options)
+        service = Service(executable_path=gecko_path)
+        self.execute_browser(options, service)
 
     def set_options(self):
         options = Options()
@@ -50,8 +53,11 @@ class AccessMarket:
         options.set_preference("javascript.enabled", False)
         return options
 
-    def execute_browser(self, options):
-        main_driver = webdriver.Firefox(options=options)
+    def execute_browser(self, options, service):
+        main_driver = webdriver.Firefox(
+            service=service,
+            options=options,
+        )
         connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
         connect_button.click()
         time.sleep(3)
