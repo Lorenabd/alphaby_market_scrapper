@@ -82,7 +82,7 @@ class AccessMarket:
 
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
-        options.set_preference("network.proxy.socks_port", 9050)
+        options.set_preference("network.proxy.socks_port", 9051)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
         return options
