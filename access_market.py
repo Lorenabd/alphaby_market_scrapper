@@ -37,6 +37,13 @@ class AccessMarket:
         #     )
         #     sys.exit(1)
         gecko_path = os.path.join(appdir, "bin/geckodriver")
+
+        if not os.path.exists(firefox_path):
+            print(f"❌ Firefox no encontrado en {firefox_path}")
+            sys.exit(1)
+        if not os.path.exists(gecko_path):
+            print(f"❌ geckodriver no encontrado en {gecko_path}")
+            sys.exit(1)
         options = self.set_options(firefox_path)
         # gecko_path = (
         #     "/home/osboxes/.cache/selenium/geckodriver/linux64/0.36.0/geckodriver"
@@ -68,6 +75,11 @@ class AccessMarket:
         #     # Fallback: usar TOR o firefox del sistema
         #     options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
         options.binary_location = firefox_path
+        options.set_preference("browser.cache.disk.enable", False)
+        options.set_preference("browser.cache.memory.enable", False)
+        options.set_preference("browser.cache.offline.enable", False)
+        options.set_preference("network.http.use-cache", False)
+
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
         options.set_preference("network.proxy.socks_port", 9050)
