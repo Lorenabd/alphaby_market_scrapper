@@ -45,7 +45,7 @@ class AccessMarket:
         service = Service(executable_path=gecko_path)
         self.execute_browser(options, service)
 
-    def tor_running(self, host="127.0.0.1", ports=(9150, 9050)):
+    def tor_running(self, host="127.0.0.1", ports=(9050, 9051)):
         """Devuelve True si detecta Tor abierto en alguno de los puertos típicos."""
         for port in ports:
             try:
