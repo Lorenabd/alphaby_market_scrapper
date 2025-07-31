@@ -33,7 +33,10 @@ class AccessMarket:
             f"{appdir}/lib:{appdir}/lib/firefox:"
             + os.environ.get("LD_LIBRARY_PATH", "")
         )
-        os.environ["MOZ_ENABLE_WAYLAND"] = "0"
+        os.environ["MOZ_ENABLE_WAYLAND"] = "0"  # Forzar X11
+        os.environ["MOZ_DISABLE_CONTENT_SANDBOX"] = "1"  # Desactivar sandbox
+        os.environ["MOZ_SANDBOX_LOGGING"] = "1"  # Para debug
+        os.environ["MOZ_DISABLE_GMP_SANDBOX"] = "1"
         firefox_path = os.path.join(appdir, "lib/firefox/firefox")
         # Comprobar si Tor está abierto
         # if not self.tor_running():
@@ -50,6 +53,8 @@ class AccessMarket:
             print(f"❌ geckodriver no encontrado en {gecko_path}")
             sys.exit(1)
         options = self.set_options(firefox_path)
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
         # gecko_path = (
         #     "/home/osboxes/.cache/selenium/geckodriver/linux64/0.36.0/geckodriver"
         # )
@@ -87,7 +92,7 @@ class AccessMarket:
 
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
-        options.set_preference("network.proxy.socks_port", 9051)
+        options.set_preference("network.proxy.socks_port", 9050)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
         return options
