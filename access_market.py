@@ -29,6 +29,11 @@ import socket
 class AccessMarket:
     def __init__(self):
         appdir = os.getenv("APPDIR", "")
+        os.environ["LD_LIBRARY_PATH"] = (
+            f"{appdir}/lib:{appdir}/lib/firefox:"
+            + os.environ.get("LD_LIBRARY_PATH", "")
+        )
+        os.environ["MOZ_ENABLE_WAYLAND"] = "0"
         firefox_path = os.path.join(appdir, "lib/firefox/firefox")
         # Comprobar si Tor está abierto
         # if not self.tor_running():
