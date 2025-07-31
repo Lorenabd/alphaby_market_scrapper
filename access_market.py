@@ -31,11 +31,11 @@ class AccessMarket:
         appdir = os.getenv("APPDIR", "")
         firefox_path = os.path.join(appdir, "lib/firefox/firefox")
         # Comprobar si Tor está abierto
-        if not self.tor_running():
-            print(
-                "❌ Tor Browser no está abierto. Ábrelo antes de ejecutar la herramienta."
-            )
-            sys.exit(1)
+        # if not self.tor_running():
+        #     print(
+        #         "❌ Tor Browser no está abierto. Ábrelo antes de ejecutar la herramienta."
+        #     )
+        #     sys.exit(1)
         gecko_path = os.path.join(appdir, "bin/geckodriver")
         options = self.set_options(firefox_path)
         # gecko_path = (
@@ -45,17 +45,17 @@ class AccessMarket:
         service = Service(executable_path=gecko_path)
         self.execute_browser(options, service)
 
-    def tor_running(self, host="127.0.0.1", ports=(9050, 9051)):
-        """Devuelve True si detecta Tor abierto en alguno de los puertos típicos."""
-        for port in ports:
-            try:
-                with socket.create_connection((host, port), timeout=2):
-                    print(f"✅ Tor detectado en puerto {port}")
-                    self.tor_port = port
-                    return True
-            except:
-                continue
-        return False
+    # def tor_running(self, host="127.0.0.1", ports=(9050, 9)):
+    #     """Devuelve True si detecta Tor abierto en alguno de los puertos típicos."""
+    #     for port in ports:
+    #         try:
+    #             with socket.create_connection((host, port), timeout=2):
+    #                 print(f"✅ Tor detectado en puerto {port}")
+    #                 self.tor_port = port
+    #                 return True
+    #         except:
+    #             continue
+    #     return False
 
     def set_options(self, firefox_path):
         options = Options()
@@ -70,7 +70,7 @@ class AccessMarket:
         options.binary_location = firefox_path
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
-        options.set_preference("network.proxy.socks_port", self.tor_port)
+        options.set_preference("network.proxy.socks_port", 9050)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
         return options
