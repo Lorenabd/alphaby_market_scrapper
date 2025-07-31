@@ -23,32 +23,54 @@ from lxml import html
 from selenium.webdriver.firefox.service import Service
 from market_scraping import ScrapingMarket
 import os
+import socket
 
 
 class AccessMarket:
     def __init__(self):
-        options = self.set_options()
-        gecko_path = (
-            "/home/osboxes/.cache/selenium/geckodriver/linux64/0.36.0/geckodriver"
-        )
+        appdir = os.getenv("APPDIR", "")
+        firefox_path = os.path.join(appdir, "lib/firefox/firefox")
+        # Comprobar si Tor está abierto
+        if not self.tor_running():
+            print(
+                "❌ Tor Browser no está abierto. Ábrelo antes de ejecutar la herramienta."
+            )
+            sys.exit(1)
+        gecko_path = os.path.join(appdir, "bin/geckodriver")
+        options = self.set_options(firefox_path)
+        # gecko_path = (
+        #     "/home/osboxes/.cache/selenium/geckodriver/linux64/0.36.0/geckodriver"
+        # )
         # gecko_path = os.path.join(os.getenv("APPDIR", ""), "bin/geckodriver")
         service = Service(executable_path=gecko_path)
         self.execute_browser(options, service)
 
-    def set_options(self):
+    def tor_running(self, host="127.0.0.1", ports=(9150, 9050)):
+        """Devuelve True si detecta Tor abierto en alguno de los puertos típicos."""
+        for port in ports:
+            try:
+                with socket.create_connection((host, port), timeout=2):
+                    print(f"✅ Tor detectado en puerto {port}")
+                    self.tor_port = port
+                    return True
+            except:
+                continue
+        return False
+
+    def set_options(self, firefox_path):
         options = Options()
         # appdir = os.environ.get("APPDIR", "")
         # if appdir:
-        #     # Firefox embebido en AppImage
+        #     # Firefox embebido en AppImage/home/osboxes/Documents/git_alphabay_admin/alphaby_market_scrapper/
         #     firefox_path = os.path.join(appdir, "lib/firefox/firefox")
         #     options.binary_location = firefox_path
         # else:
         #     # Fallback: usar TOR o firefox del sistema
         #     options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
-        options.binary_location = f"{os.getenv('BROWSER')}/tor-browser/Browser/firefox"
+        options.binary_location = firefox_path
         options.set_preference("network.proxy.type", 1)
         options.set_preference("network.proxy.socks", "127.0.0.1")
-        options.set_preference("network.proxy.socks_port", 9051)
+        options.set_preference("network.proxy.socks_port", self.tor_port)
         options.set_preference("network.proxy.socks_remote_dns", True)
         options.set_preference("javascript.enabled", False)
         return options
@@ -58,9 +80,9 @@ class AccessMarket:
             service=service,
             options=options,
         )
-        connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
-        connect_button.click()
-        time.sleep(3)
+        # connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
+        # connect_button.click()
+        # time.sleep(3)
         url = "http://alphaa3u7wqyqjqctrr44bs76ylhfibeqoco2wyya4fnrjwr77x2tbqd.onion/listing_category?id=1"  # Alphabay URL
         main_driver.get(url)
 
