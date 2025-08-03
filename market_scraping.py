@@ -358,5 +358,11 @@ class ScrapingMarket:
                 "Total Sales Product": self.config["user_info"]["orders"]["completed"],
             }
         ).sort_values(by="Seller")
-        df_data_extracted.to_csv(f"{self.file_output_name}.csv", index=False, sep=",")
+
+        os.makedirs("DATA_EXTRACTED", exist_ok=True)
+        df_data_extracted.to_csv(
+            os.path.join("DATA_EXTRACTED", f"{self.file_output_name}.csv"),
+            index=False,
+            sep=",",
+        )
         self.continue_scrapping()
