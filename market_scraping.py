@@ -13,6 +13,7 @@ import time
 import pandas as pd
 import os
 from pop_up_continue import WindowContinue
+from info_window import WindowInfo
 
 
 class ScrapingMarket:
@@ -21,7 +22,10 @@ class ScrapingMarket:
         self.file_output_name = file_output_name
         self.config = self.read_json("./variables.json")
         self.window_continue = WindowContinue()
-        self.get_data()
+        self.window_info = WindowInfo()
+        self.accept = self.window_info.get_result()
+        if self.accept == True:
+            self.get_data()
 
     def read_json(self, variables_file):
         with open(variables_file, "r") as file:
