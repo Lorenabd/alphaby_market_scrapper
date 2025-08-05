@@ -364,6 +364,9 @@ class ScrapingMarket:
         ).sort_values(by="Seller")
 
         os.makedirs("DATA_EXTRACTED", exist_ok=True)
+        df_data_extracted.to_excel(
+            os.path.join("DATA_EXTRACTED", f"{self.file_output_name}.xlsx"), index=True
+        )
         df_data_extracted.to_csv(
             os.path.join("DATA_EXTRACTED", f"{self.file_output_name}.csv"),
             index=False,
