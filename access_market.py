@@ -196,7 +196,13 @@ class AccessMarket:
         main_driver = webdriver.Firefox(options=options)
         connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
         connect_button.click()
-        time.sleep(3)
+        WebDriverWait(main_driver, 20).until(
+            lambda d: d.find_element("tag name", "body")
+            .get_attribute("innerHTML")
+            .strip()
+            == ""
+        )
+        print("Tor browser conexion stablished")
         url = "http://alphaa3u7wqyqjqctrr44bs76ylhfibeqoco2wyya4fnrjwr77x2tbqd.onion/listing_category?id=1"  # Alphabay URL
         main_driver.get(url)
 
