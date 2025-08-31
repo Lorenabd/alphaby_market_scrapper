@@ -196,7 +196,7 @@ class AccessMarket:
         main_driver = webdriver.Firefox(options=options)
         connect_button = main_driver.find_element(By.XPATH, '//*[@id="connectButton"]')
         connect_button.click()
-        WebDriverWait(main_driver, 20).until(
+        WebDriverWait(main_driver, 200).until(
             lambda d: d.find_element("tag name", "body")
             .get_attribute("innerHTML")
             .strip()
