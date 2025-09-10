@@ -25,7 +25,7 @@ class ScrapingMarket:
         self.window_info = WindowInfo()
         self.accept = self.window_info.get_result()
         if self.accept == True:
-            print(f"Scraping category into “{result}”…")
+            print(f"Scraping category into “{file_output_name}”…")
             self.get_data()
 
     def read_json(self, variables_file):
