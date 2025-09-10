@@ -38,7 +38,7 @@ class ScrapingMarket:
         if result is None:
             print("Extraction finished.")
         else:
-            print(f"Saving next category extracted data too “{result}”…")
+            print(f"Saving the data extracted from the next category to “{result}”…")
             self.file_output_name = result
             self.get_data()
 
