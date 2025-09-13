@@ -74,9 +74,9 @@ class AccessMarket:
         )
 
         layout = QVBoxLayout()
-        layout.addWidget(message)
         layout.addWidget(input_label)
         layout.addWidget(input_field)
+        layout.addWidget(message)
         layout.addWidget(continue_button)
 
         window.setLayout(layout)
