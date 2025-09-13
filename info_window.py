@@ -15,7 +15,7 @@ class WindowInfo(QDialog):
         self.info()
 
     def info(self):
-        self.setWindowTitle("Scrapper Information!")
+        self.setWindowTitle("Important Information!")
 
         icon_label = QLabel()
         style = QApplication.style()
